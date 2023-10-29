@@ -3,3 +3,4 @@ pandas
 numpy
 FastApi
 render
+--upgrade pip
