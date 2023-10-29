@@ -2,4 +2,3 @@ uvicorn
 pandas
 numpy
 FastApi
-render

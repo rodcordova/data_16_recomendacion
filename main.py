@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import pandas as pd
-import joblib
+#import joblib
 
 app = FastAPI()
 
