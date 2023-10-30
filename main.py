@@ -20,7 +20,8 @@ def developer(desarrollador:str):
     
     # Se crea el diccionario de respuesta
     respuesta = {
-        'desarrollador': desarrollador
+        'desarrollador': desarrollador,
+        'Anio': filtrado['release_year']
         }
 
     return respuesta
