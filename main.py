@@ -4,17 +4,28 @@ import pandas as pd
 
 app = FastAPI()
 
+df1 = pd.read_csv(r"consulta1.csv")
 
-@app.get("/userdata/{User_id}")
-def userdata(User_id:str):
+@app.get("/developer/{desarrollador}")
+def developer(desarrollador:str):
     '''
-    Devuelve la cantidad de dinero gastado por el usuario ingresado, el porcentaje de 
-    recomendaciones que dejo y cuantos juegos comprados tiene en su libreria.
+    te da cantidad de items y % de contenido free segun la empresa desarrolladora
     '''
-   #
-   #filtered_df = df_userdata.query(f"user_id == '{User_id}'")
-   #response= {"Usuario_ingresado":str(filtered_df.iloc[0,0]),
-   #        "Dinero_Gastado":int(filtered_df.iloc[0,2]),
-   #        "Porcentaje de recomendaciones hechas positivas":float(filtered_df.iloc[0,3]),
-   #        "Cantidad de Juegos en libreria":int(filtered_df.iloc[0,1])}
-    return 'response'
+   
+   # Filtro por el publisher # Agrupado
+    filtrado=df1[df1['publisher']==desarrollador].groupby('release_year')['price'].agg([('Cantidad free',lambda x:(x==0.00).sum()),('Totoal elementos', 'count')]).reset_index()
+
+    filtrado['porcentaje_free']= filtrado.apply(lambda x:round(x['Cantidad free']/x['Totoal elementos'],2)*100 if x['Totoal elementos']!= 0 else 0,axis=1)
+
+    
+    # Se crea el diccionario de respuesta
+    respuesta = {
+        'desarrollador': desarrollador,
+        'Anio': filtrado['release_year'],
+        'Cantidad items': filtrado['Totoal elementos'],
+        'Contenido free %': filtrado['porcentaje_free']
+        }
+
+    return respuesta
+
+#release_year	Cantidad free	Totoal elementos	porcentaje_free
