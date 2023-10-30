@@ -20,10 +20,7 @@ def developer(desarrollador:str):
     
     # Se crea el diccionario de respuesta
     respuesta = {
-        'desarrollador': desarrollador,
-        'Anio': filtrado['release_year'],
-        'Cantidad items': filtrado['Totoal elementos'],
-        'Contenido free %': filtrado['porcentaje_free']
+        'desarrollador': desarrollador
         }
 
     return respuesta
