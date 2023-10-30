@@ -17,11 +17,15 @@ def developer(desarrollador:str):
 
     filtrado['porcentaje_free']= filtrado.apply(lambda x:round(x['Cantidad free']/x['Totoal elementos'],2)*100 if x['Totoal elementos']!= 0 else 0,axis=1)
 
-    
+    anio=[fila for fila in filtrado['release_year']]
+    cantElementos=[fila for fila in filtrado['Totoal elementos']]
+    free=[fila for fila in filtrado['porcentaje_free']]
     # Se crea el diccionario de respuesta
     respuesta = {
         'desarrollador': desarrollador,
-        'Anio': filtrado['release_year']
+        'Anio': anio,
+        'Cantidad items':cantElementos,
+        "Contenido free":free
         }
 
     return respuesta
