@@ -77,9 +77,9 @@ def best_developer(anio:str):
     resultado.reset_index(drop=True)
 
     respuesta = {[
-        'developer1': resultado.iloc[0]['developer'],
-        'developer2': resultado.iloc[1]['developer'],
-        'developer3': resultado.iloc[2]['developer']]
+        {'developer1': resultado.iloc[0]['developer']},
+        {'developer2': resultado.iloc[1]['developer']},
+        {'developer3': resultado.iloc[2]['developer']}]
         }
 
     return respuesta
