@@ -31,3 +31,24 @@ def developer(desarrollador:str):
     return respuesta
 
 #release_year	Cantidad free	Totoal elementos	porcentaje_free
+
+@app.get("/userdata/{User_id}")
+def userdata(User_id:str):
+    filtrado=df1[df1['user_id']==User_id]
+
+    gastado=filtrado['price'].sum()
+
+    cantidad_items=filtrado.shape[0]
+
+    positivo=[reco for reco in filtrado['recommend'] if reco==True]
+    cant_pos=len(positivo)
+    porcentaje=cant_pos/cantidad_items
+
+    respuesta = {
+        'User_id': User_id,
+        'Dinero_gastado': gastado,
+        'Cantidad_items':cantidad_items,
+        "%recomendacion":porcentaje
+        }
+
+    return respuesta

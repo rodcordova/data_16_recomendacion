@@ -1,4 +1,6 @@
 __pycache__
 Dataset  
-df_reviews_final.csv
-steam_games.csv
+games.csv
+items.csv
+reviews.csv
+df_total.csv
