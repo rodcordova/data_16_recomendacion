@@ -55,31 +55,41 @@ def userdata(User_id:str):
 
 @app.get("/best_developer/{anio}")
 def best_developer(anio:str):
-    # filtramos por el anio
-    filtrado=df1[df1['release_year']==anio]
-
-    # cantidad total por año 
-    top_developers = filtrado.groupby('release_year')['user_id'].agg([('cantidad','count')])
-    top_developers.reset_index()
-
-    # cantidad total de año positivos
-    cantpos = filtrado.groupby(['release_year','developer'])['recommend'].agg([('cantidad_pos',lambda x:(x==True).count())])
+    # AGRUPO release_year y developer CALCULO recomendacion positiva
+    cantpos = df1.groupby(['release_year','developer'])['recommend'].agg([('cantidad_pos',lambda x:(x==True).count())])
     cantpos=cantpos.reset_index()
 
-    # Combinar DataFrames utilizando 'merge'
-    resultado = top_developers.merge(cantpos, on='release_year', how='outer')
+    # Agrupo y CALCULO la cantidad por ano
+    top_developers = df1.groupby('release_year')['user_id'].agg([('cantidad','count')])
+    top_developers=top_developers.reset_index()
     
-    # divido 2 columnas del dataframe
+    # AGRUPAR DataFrames utilizando 'merge'
+    resultado = top_developers.merge(cantpos, on='release_year', how='outer')
+
+    # OPERACION MATEMATICA
     resultado['total']=resultado['cantidad_pos']/resultado['cantidad']
 
-    # ordeno y reseteo el indice
+    # ORDENAR
     resultado=resultado.sort_values(by='total', ascending=False)
-    resultado.reset_index(drop=True)
+    
+    # FILTRAR
+    filtro=resultado[resultado['release_year']==anio]
+
+    try:
+    # Código que puede generar una excepción
+        dev1=filtro.iloc[0]['developer']
+        dev2=filtro.iloc[1]['developer']
+        dev3=filtro.iloc[2]['developer']
+    except Exception as e:
+        # Manejo de cualquier otra excepción no especificada anteriormente
+        dev1='ninguno'
+        dev2='ninguno'
+        dev3='ninguno'
 
     respuesta = {[
-        {'developer1': resultado.iloc[0]['developer']},
-        {'developer2': resultado.iloc[1]['developer']},
-        {'developer3': resultado.iloc[2]['developer']}]
+        {'developer1': dev1},
+        {'developer2': dev2},
+        {'developer3': dev3}]
         }
 
     return respuesta
