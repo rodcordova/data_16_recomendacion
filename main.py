@@ -86,10 +86,27 @@ def best_developer(anio:str):
         dev2='ninguno'
         dev3='ninguno'
 
-    respuesta = {[
+    respuesta = {'TOP':[
         {'developer1': dev1},
         {'developer2': dev2},
         {'developer3': dev3}]
+        }
+
+    return respuesta
+
+@app.get("/developer_reviews_analisis/{desarrollador}")
+def developer_reviews_analisis(desarrollador:str):
+    # FILTRAMOS
+    filtrado= df1[df1['developer']=='desarrollador']
+
+    # CONTAMOS
+    category_counts={}
+    for category in filtrado['sentiment_analysis']:
+        category_counts[category]=category_counts.get(category,0)+1
+
+    respuesta = {desarrollador:[
+        {'cantidad positiva': category_counts[2]},
+        {'cantidad negativa': category_counts[0]}]
         }
 
     return respuesta
