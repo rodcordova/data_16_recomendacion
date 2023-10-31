@@ -52,3 +52,34 @@ def userdata(User_id:str):
         }
 
     return respuesta
+
+@app.get("/best_developer/{anio}")
+def best_developer(anio:str):
+    # filtramos por el anio
+    filtrado=df1[df1['release_year']==anio]
+
+    # cantidad total por año 
+    top_developers = filtrado.groupby('release_year')['user_id'].agg([('cantidad','count')])
+    top_developers.reset_index()
+
+    # cantidad total de año positivos
+    cantpos = filtrado.groupby(['release_year','developer'])['recommend'].agg([('cantidad_pos',lambda x:(x==True).count())])
+    cantpos=cantpos.reset_index()
+
+    # Combinar DataFrames utilizando 'merge'
+    resultado = top_developers.merge(cantpos, on='release_year', how='outer')
+    
+    # divido 2 columnas del dataframe
+    resultado['total']=resultado['cantidad_pos']/resultado['cantidad']
+
+    # ordeno y reseteo el indice
+    resultado=resultado.sort_values(by='total', ascending=False)
+    resultado.reset_index(drop=True)
+
+    respuesta = {[
+        'developer1': resultado.iloc[0]['developer'],
+        'developer2': resultado.iloc[1]['developer'],
+        'developer3': resultado.iloc[2]['developer']]
+        }
+
+    return respuesta
