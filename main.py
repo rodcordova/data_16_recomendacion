@@ -29,9 +29,9 @@ def developer(desarrollador:str):
         }
 
     return respuesta
+#print(developer('Ubisoft'))
 
-#release_year	Cantidad free	Totoal elementos	porcentaje_free
-
+## 2
 @app.get("/userdata/{User_id}")
 def userdata(User_id:str):
     filtrado=df1[df1['user_id']==User_id]
@@ -52,7 +52,9 @@ def userdata(User_id:str):
         }
 
     return respuesta
+#print(userdata('sinuserid'))
 
+## 4
 @app.get("/best_developer/{anio}")
 def best_developer(anio:str):
     # AGRUPO release_year y developer CALCULO recomendacion positiva
@@ -78,12 +80,18 @@ def best_developer(anio:str):
     try:
     # Código que puede generar una excepción
         dev1=filtro.iloc[0]['developer']
-        dev2=filtro.iloc[1]['developer']
-        dev3=filtro.iloc[2]['developer']
     except Exception as e:
         # Manejo de cualquier otra excepción no especificada anteriormente
         dev1='ninguno'
+
+    try:
+        dev2=filtro.iloc[1]['developer']
+    except Exception as e:
         dev2='ninguno'
+
+    try:
+        dev3=filtro.iloc[2]['developer']
+    except Exception as e:
         dev3='ninguno'
 
     respuesta = {'TOP':[
@@ -93,11 +101,13 @@ def best_developer(anio:str):
         }
 
     return respuesta
+#print(best_developer(1990))
 
+## 5
 @app.get("/developer_reviews_analisis/{desarrollador}")
 def developer_reviews_analisis(desarrollador:str):
     # FILTRAMOS
-    filtrado= df1[df1['developer']=='desarrollador']
+    filtrado= df1[df1['developer']==desarrollador]
 
     # CONTAMOS
     category_counts={}
@@ -110,3 +120,4 @@ def developer_reviews_analisis(desarrollador:str):
         }
 
     return respuesta
+#print(developer_reviews_analisis('sindev'))
