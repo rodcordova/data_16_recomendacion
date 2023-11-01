@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 import pandas as pd
-#import joblib
+import joblib
+
+similarity = joblib.load('modelo_entrenado.pkl')
 
 app = FastAPI()
 
@@ -121,3 +123,20 @@ def developer_reviews_analisis(desarrollador:str):
 
     return respuesta
 #print(developer_reviews_analisis('sindev'))
+
+@app.get("/obtener_recomendaciones/{user_id}")
+def obtener_recomendaciones(user_id, cosine_sim=similarity):
+    idx = df1[df1['user_id'] == user_id].index[0]
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores = sim_scores[1:4]  # Obtener las 3 recomendaciones principales
+    ap_indices = [i[0] for i in sim_scores]
+    lista_top= df1['app_name'].iloc[ap_indices]
+
+    respuesta = {user_id:[
+        {'Top 3 Lista recomendado': lista_top}]
+        }
+
+    return respuesta
+
+print(obtener_recomendaciones('evcentric'))
