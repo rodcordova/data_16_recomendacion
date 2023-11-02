@@ -5,4 +5,3 @@ FastApi
 matplotlib 
 scikit-learn
 seaborn
-joblib
