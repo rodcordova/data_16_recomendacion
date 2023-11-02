@@ -4,7 +4,7 @@ import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
-similarity = joblib.load('modelo_entrenado.pkl')
+#similarity = joblib.load('modelo_entrenado.pkl')
 
 app = FastAPI()
 
@@ -127,7 +127,7 @@ def developer_reviews_analisis(desarrollador:str):
 #print(developer_reviews_analisis('sindev'))
 
 @app.get("/obtener_recomendaciones/{user_id}")
-def obtener_recomendaciones(user_id:str, cosine_sim=similarity):
+def obtener_recomendaciones(user_id:str)#, cosine_sim=similarity):
     
     return user_id
 
