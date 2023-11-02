@@ -126,6 +126,10 @@ def developer_reviews_analisis(desarrollador:str):
     return respuesta
 #print(developer_reviews_analisis('sindev'))
 
+@app.get("/obtener_recomendaciones/{user_id}")
+def obtener_recomendaciones(user_id:str)#, cosine_sim=similarity):
+    
+    return user_id
 
 
 #print(obtener_recomendaciones('evcentric'))
