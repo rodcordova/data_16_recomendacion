@@ -132,3 +132,4 @@ def obtener_recomendaciones(user_id:str, cosine_sim=similarity):
     return "respuesta"
 
 #print(obtener_recomendaciones('evcentric'))
+
