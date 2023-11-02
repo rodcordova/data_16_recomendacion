@@ -129,7 +129,7 @@ def developer_reviews_analisis(desarrollador:str):
 @app.get("/obtener_recomendaciones/{user_id}")
 def obtener_recomendaciones(user_id:str)#, cosine_sim=similarity):
     
-    return user_id
+    return "user_id"
 
 
 #print(obtener_recomendaciones('evcentric'))
