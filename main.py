@@ -141,4 +141,4 @@ def obtener_recomendaciones(user_id, cosine_sim=similarity):
 
     return respuesta
 
-print(obtener_recomendaciones('evcentric'))
+#print(obtener_recomendaciones('evcentric'))
